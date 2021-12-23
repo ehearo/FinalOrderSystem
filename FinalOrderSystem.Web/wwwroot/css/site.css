@@ -1,0 +1,52 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.card.user-card {
+    display: table;
+}
+
+.card-block {
+    display: table-row;
+}
+
+h1 {
+    text-align: center;
+}
+
+.badge-notify {
+    width: 20px;
+    height: 20px;
+    background: red;
+    position: relative;
+    right: 10px;
+    top: -15px;
+}
+
+.my-cart-icon-affix {
+    position: fixed;
+    z-index: 999;
+}
+
+#nm-post-content {
+    float: left;
+}
+
+#wrapper {
+    float: right;
+}

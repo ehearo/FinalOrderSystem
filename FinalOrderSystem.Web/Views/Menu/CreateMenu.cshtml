@@ -1,0 +1,58 @@
+﻿
+@model IEnumerable<FinalOrderSystem.DataClass.DataModels.Menu>
+@{Guid SID = Guid.NewGuid();}
+@{
+    ViewData["Title"] = "新增餐點";
+}
+<div class=”container”>&nbsp;</div>
+<h2>新增餐點</h2>
+<div class=”container”>&nbsp;</div>
+<form method="post" action="/Menu/CreateMenu">
+    <div class="form-group row">
+        <label for="inputCharName" class="col-sm-2">名稱</label>
+        <div class="col-sm-10">
+            <input type = "hidden" name = "SID" value = @SID />
+            <input type="text" id="inputID" name="Name" class="form-control" required/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputCharName" class="col-sm-2">價格NT$</label>
+        <div class="col-sm-10">
+            <input type="text" id="inputPrice" name="Price" class="form-control" required/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputCardName" class="col-sm-2">餐點介紹</label>
+        <div class="col-sm-10">
+            <input type="text" id="inputDescription" name="Description" class="form-control" required/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputCardLevel" class="col-sm-2">圖片URL</label>
+        <div class="col-sm-10">
+            <input type="text" id="inputImage" name="Image" class="form-control" required/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputCardLevel" class="col-sm-2">餐點分類</label>
+        <div class="col-sm-10">
+            <select name="Category" id="inputCategory" class="form-control" required>
+                    <option selected disabled hidden style='display: none' value=''>-- 選擇類別 --</option>
+                    <option value="主食">主食</option>
+                    <option value="副食">副食</option>
+                    <option value="湯品">湯品</option>
+                    <option value="飲料">飲料</option>
+            </select>
+        </div>
+    </div>
+    <input class="btn btn-primary" type="submit" value="送出"/>
+</form>
+
+
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div id='er' class="alert alert-danger">
+    <p>@ViewBag.ErrorMessage</p>
+</div>
+}

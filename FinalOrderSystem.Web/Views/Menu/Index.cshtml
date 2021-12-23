@@ -1,0 +1,64 @@
+﻿@model IEnumerable<FinalOrderSystem.DataClass.DataModels.Menu>
+
+@{
+    ViewData["Title"] = "菜單";
+}
+<div class=”container”>&nbsp;</div>
+<div class=”container”>&nbsp;</div>
+
+<div class="row">
+    <div class="col-4">
+        <div class="list-group list-group-horizontal" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active" id="list-Maindish-list" data-toggle="list" href="#list-Maindish" onClick="reply_click(this.id)" role="tab" aria-controls="home">主餐</a>
+            <a class="list-group-item list-group-item-action " id="list-SideDish-list" data-toggle="list" href="#list-SideDish" onClick="reply_click(this.id)" role="tab" aria-controls="profile">副餐</a>
+            <a class="list-group-item list-group-item-action " id="list-Soup-list" data-toggle="list" href="#list-Soup" onClick="reply_click(this.id)" role="tab" aria-controls="messages">湯品</a>
+            <a class="list-group-item list-group-item-action " id="list-Drink-list" data-toggle="list" href="#list-Drink" onClick="reply_click(this.id)" role="tab" aria-controls="settings">飲料</a>
+        </div>
+    </div>
+</div>
+<div class=”container”>&nbsp;</div>
+
+<div id="Maindish">
+    @{
+        if (Model != null)
+        {
+            var category_Maindish = Model.Where(x => x.Category == "主食");
+            await Html.RenderPartialAsync("_MenuItemPartial", category_Maindish);
+        }
+    }
+</div>
+<div id="SideDish" style="display:none;">
+    @{
+        if (Model != null)
+        {
+            var category_SideDish = Model.Where(x => x.Category == "副食");
+            await Html.RenderPartialAsync("_MenuItemPartial", category_SideDish);
+        }
+    }
+</div>
+<div id="Soup" style="display:none;">
+    @{
+        if (Model != null)
+        {
+            var category_Soup = Model.Where(x => x.Category == "湯品");
+            await Html.RenderPartialAsync("_MenuItemPartial", category_Soup);
+        }
+    }
+</div>
+<div id="Drink" style="display:none;">
+    @{
+        if (Model != null)
+        {
+            var category_Drink = Model.Where(x => x.Category == "飲料");
+            await Html.RenderPartialAsync("_MenuItemPartial", category_Drink);
+        }
+    }
+</div>
+<div id="success" class="alert alert-success fade" style=" width:150px; position: absolute; top: 80px; right: 0;">
+    <strong>成功加入購物車</strong>
+</div>
+
+@section Scripts{
+<script src="~/js/index.js" asp-append-version="true"></script>
+<script src="~/js/cart.js" asp-append-version="true"></script>
+    }

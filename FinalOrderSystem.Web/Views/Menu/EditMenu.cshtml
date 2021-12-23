@@ -1,0 +1,60 @@
+﻿@model IEnumerable<FinalOrderSystem.DataClass.DataModels.Menu>
+@{
+    ViewData["Title"] = "修改餐點";
+}
+<div class=”container”>&nbsp;</div>
+<h2>修改餐點</h2>
+<div class=”container”>&nbsp;</div>
+@foreach(var item in Model){
+<form method="post" action="/Menu/EditMenu">
+    <div class="form-group row">
+        <label for="inputCharName" class="col-sm-2">名稱</label>
+        <div class="col-sm-10">
+            <input type = "hidden" name = "SID" value = "@item.SID" />
+            <input type="text" id="inputID" name="Name" class="form-control" value="@item.Name" required/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputCharName" class="col-sm-2">價格NT$</label>
+        <div class="col-sm-10">
+            <input type="text" id="inputPrice" name="Price" class="form-control" value="@item.Price" required/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputCardName" class="col-sm-2">餐點介紹</label>
+        <div class="col-sm-10">
+            <input type="text" id="inputDescription" name="Description" class="form-control" value="@item.Description" required/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputCardLevel" class="col-sm-2">圖片URL</label>
+        <div class="col-sm-10">
+            <input type="text" id="inputImage" name="Image" class="form-control" value="@item.Image" required/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputCardLevel" class="col-sm-2">餐點分類</label>
+        <div class="col-sm-10">
+            <select name="Category" id="inputCategory" class="form-control" value="@item.Category" required>
+                    
+                    <option value="主食">主食</option>
+                    <option value="副食">副食</option>
+                    <option value="湯品">湯品</option>
+                    <option value="飲料">飲料</option>
+                    <option selected="@item.Category">
+                        @item.Category
+                    </option>
+            </select>
+        </div>
+    </div>
+    <input class="btn btn-primary" type="submit" value="送出"/>
+</form>
+}
+
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div id='er' class="alert alert-danger">
+    <p>@ViewBag.ErrorMessage</p>
+</div>
+}

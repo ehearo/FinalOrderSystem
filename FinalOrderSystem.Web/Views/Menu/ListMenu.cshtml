@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FinalOrderSystem.DataClass.DataModels.Menu>
+
+
+@{
+    ViewData["Title"] = "餐點管理";
+}
+<div class=”container”>&nbsp;</div>
+<div class=”container”>&nbsp;</div>
+
+@using (Html.BeginForm("GetMenuByName","Menu"))
+{
+<p>
+    餐點名稱: @Html.TextBox("Name")
+    <input type="submit" value="Search" />
+</p>
+}
+@Html.ActionLink("新增餐點","CreateMenu",new {},new {@class="btn btn-primary"})
+
+<div class="table-responsive-xl">
+    <table class="table table-xl  table-hover">
+        <thead>
+            <tr>
+                <th>圖片</th>
+                <th>名稱</th>
+                <th>NT$ </th>
+                <th>介紹</th>
+                <th>類別</th>
+                <th>新增日期</th>
+                <th>修改日期</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th><img style="width: 10rem; height: 9rem;" src="@item.Image"></th>
+                    <th>@item.Name</th>
+                    <th>@item.Price</th>
+                    <th style="width: 10rem;">@item.Description</th>
+                    <th>@item.Category</th>
+                    <th>@item.CreateDateTime</th>
+                    <th>@item.ModifyDateTime</th>
+                    <th>@Html.ActionLink("編輯","EditMenu",new {SID = item.SID},new {@class="btn btn-success"}) </th>
+                    <th>
+                        @using (Html.BeginForm("DeleteMenu", "Menu", FormMethod.Post, new {onsubmit = "return confirm('Are you sure you want to delete this listing?');" }))
+                        {
+                            @Html.Hidden("SID",item.SID)
+                            <button type="submit" class = "btn btn-danger">刪除</button>
+                        }
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
