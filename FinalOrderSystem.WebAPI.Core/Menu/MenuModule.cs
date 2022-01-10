@@ -5,15 +5,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FinalOrderSystem.DataClass.DataModels;
+using System.Data;
 
 namespace FinalOrderSystem.WebAPI.Core.Menu
 {
-
-    public class MenuModule 
+    
+    public interface IMenuModule
     {
-        private readonly MenuRepository _menuRepository = new MenuRepository();
-
-
+        IEnumerable<FinalOrderSystem.DataClass.DataModels.Menu> GetMenus();
+        IEnumerable<FinalOrderSystem.DataClass.DataModels.Menu> GetMenuByID(String SID);
+        IEnumerable<FinalOrderSystem.DataClass.DataModels.Menu> GetMenuByName(String Name);
+        bool CreateMenu(FinalOrderSystem.DataClass.DataModels.Menu Menu);
+        bool EditMenu(FinalOrderSystem.DataClass.DataModels.Menu Menu);
+        bool DeleteMenu(String SID);
+    }
+    
+    public class MenuModule : IMenuModule
+    {
+        
+        private readonly IMenuRepository _menuRepository;
+        public MenuModule(IMenuRepository MenuRepository)
+        {
+            _menuRepository = MenuRepository;
+        }
+        //private readonly MenuRepository _menuRepository = new MenuRepository();
+        
         public IEnumerable<FinalOrderSystem.DataClass.DataModels.Menu> GetMenus()
         {
             var result = _menuRepository.GetMenus();
@@ -47,5 +63,5 @@ namespace FinalOrderSystem.WebAPI.Core.Menu
             var result = _menuRepository.DeleteMenu(SID);
             return result;
         }
-    }   
+    }
 }

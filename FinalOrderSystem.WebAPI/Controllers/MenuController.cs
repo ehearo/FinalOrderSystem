@@ -8,7 +8,12 @@ namespace FinalOrderSystem.WebAPI.Controllers
     [ApiController]
     public class MenuController : ControllerBase
     {
-        private readonly MenuModule _menuModule = new MenuModule();
+        private readonly IMenuModule _menuModule;
+        public MenuController(IMenuModule MenuModule)
+        {
+            _menuModule = MenuModule;
+        }
+        //private readonly MenuModule _menuModule = new MenuModule();
         [HttpGet]
         [Route("GetMenus")]
         public IEnumerable<FinalOrderSystem.DataClass.DataModels.Menu> GetMenus()

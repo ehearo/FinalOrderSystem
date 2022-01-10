@@ -2,6 +2,7 @@
 using FinalOrderSystem.DataClass.DataModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -23,16 +24,22 @@ namespace FinalOrderSystem.Adapter
     }
     public class MenuRepository : IMenuRepository
     {
-        private readonly string _dbconnetionstring = "Data Source = LC105-22163-01\\SQLEXPRESS;Initial Catalog = OrderSystem; Integrated Security = True";
-
+        private readonly IDbConnection _conn;
+       // private readonly string _conn;
+        public MenuRepository(/*string dbConnectionString*/IDbConnection _conn)
+        {
+            // this._conn = dbConnectionString;
+            this._conn = _conn;
+        }
+   
         public IEnumerable<Menu> GetMenus()
         {
             try
             {
-                using (var conn = new SqlConnection(_dbconnetionstring))
+                using (/*var conn = new SqlConnection(_conn)*/_conn)
                 {
                     string Query = "usp_SelectMenu";
-                    var results = conn.Query<Menu>(Query, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                    var results = _conn.Query<Menu>(Query, commandType: System.Data.CommandType.StoredProcedure).ToList();
                     return results;
                 }
             }
@@ -52,12 +59,12 @@ namespace FinalOrderSystem.Adapter
         {
             try
             {
-                using (var conn = new SqlConnection(_dbconnetionstring))
+                using (_conn)
                 {
                     string Query = "usp_SelectByIDMenu";
                     DynamicParameters param = new DynamicParameters();
                     param.Add("@SID", SID);
-                    var results = conn.Query<Menu>(Query, param, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                    var results = _conn.Query<Menu>(Query, param, commandType: System.Data.CommandType.StoredProcedure).ToList();
                     return results;
                 }
             }
@@ -71,12 +78,12 @@ namespace FinalOrderSystem.Adapter
         {
             try
             {
-                using (var conn = new SqlConnection(_dbconnetionstring))
+                using (_conn)
                 {
                     string query = "usp_SelectByNameMenu";
                     DynamicParameters param = new DynamicParameters();
                     param.Add("@Name", Name);
-                    var results = conn.Query<Menu>(query, param, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                    var results = _conn.Query<Menu>(query, param, commandType: System.Data.CommandType.StoredProcedure).ToList();
                     return results;
                 }
             }
@@ -90,7 +97,7 @@ namespace FinalOrderSystem.Adapter
         {
             try
             {
-                using (var conn = new SqlConnection(_dbconnetionstring))
+                using (_conn)
                 {
                     string query = "usp_CreateMenu";
                     DynamicParameters param = new DynamicParameters();
@@ -100,7 +107,7 @@ namespace FinalOrderSystem.Adapter
                     param.Add("@Price", Menu.Price);
                     param.Add("@Category", Menu.Category);
                     param.Add("@Description", Menu.Description);
-                    var results = conn.Execute(query, param, commandType: System.Data.CommandType.StoredProcedure);
+                    var results = _conn.Execute(query, param, commandType: System.Data.CommandType.StoredProcedure);
                     return results > 0;
                 }
             }
@@ -115,7 +122,7 @@ namespace FinalOrderSystem.Adapter
         {
             try
             {
-                using (var conn = new SqlConnection(_dbconnetionstring))
+                using (_conn)
                 {
                     string Query = "usp_UpdateMenu";
                     DynamicParameters param = new DynamicParameters();
@@ -125,7 +132,7 @@ namespace FinalOrderSystem.Adapter
                     param.Add("@Price", Menu.Price);
                     param.Add("@Category", Menu.Category);
                     param.Add("@Description", Menu.Description);
-                    var results = conn.Execute(Query, param, commandType: System.Data.CommandType.StoredProcedure);
+                    var results = _conn.Execute(Query, param, commandType: System.Data.CommandType.StoredProcedure);
                     return results > 0;
                 }
             }
@@ -140,12 +147,12 @@ namespace FinalOrderSystem.Adapter
         {
             try
             {
-                using (var conn = new SqlConnection(_dbconnetionstring))
+                using (_conn)
                 {
                     string Query = "usp_DeleteMenu";
                     DynamicParameters param = new DynamicParameters();
                     param.Add("@SID", SID);
-                    var results = conn.Execute(Query, param, commandType: System.Data.CommandType.StoredProcedure);
+                    var results = _conn.Execute(Query, param, commandType: System.Data.CommandType.StoredProcedure);
                     return results > 0;
                 }
             }
